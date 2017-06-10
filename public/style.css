@@ -7,8 +7,10 @@ body, html{
 
 .photos-list{
 	list-style: none;
-	flex-direcrion:column;
+	display: flex;
 	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-around; 
 	padding: 0;
 }
 

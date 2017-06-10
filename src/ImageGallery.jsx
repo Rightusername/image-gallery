@@ -25,7 +25,6 @@ class ImageGallery extends React.Component{
 
 
     loadPhotos(){
-        this.refs["loadbar"].className = "show-load-bar";
         const url='https://api.500px.com/v1/photos?feature=popular&consumer_key=wB4ozJxTijCwNuggJvPGtBGCRqaZVcF6jsrzUadF&image_size=4&page=' + this.state.photosPage;
         superagent
         .get(url)
@@ -72,6 +71,7 @@ class ImageGallery extends React.Component{
 
     handleScroll(e){
         if(e.target.body.scrollHeight - e.target.body.scrollTop <= e.target.body.clientHeight + 10){
+            this.refs["loadbar"].className = "show-load-bar";
             this.throtledLoadPhotos();
         }
     }
@@ -100,7 +100,7 @@ class ImageGallery extends React.Component{
             // photos[i+3].myHeight = photos[i+3].myHeight*k;
             // photos[i+4].myHeight = photos[i+4].myHeight*k;
             for(var j=0; j<maxPhotos; j++){
-                photos[i+j].myHeight = photos[i+j].myHeight*k;
+                photos[i+j].myHeight = photos[i+j].myHeight*k - 0.25;
             }
         }
 
