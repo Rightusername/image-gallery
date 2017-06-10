@@ -13,7 +13,7 @@ class ImageGallery extends React.Component{
         this.changeOpenPhoto = this.changeOpenPhoto.bind(this);
         this.throtledLoadPhotos = _.debounce(function() {
             this.loadPhotos();
-        },2000);
+        },1500);
     }
 
     componentDidMount(){
@@ -25,6 +25,7 @@ class ImageGallery extends React.Component{
 
 
     loadPhotos(){
+        this.refs["loadbar"].className = "show-load-bar";
         const url='https://api.500px.com/v1/photos?feature=popular&consumer_key=wB4ozJxTijCwNuggJvPGtBGCRqaZVcF6jsrzUadF&image_size=4&page=' + this.state.photosPage;
         superagent
         .get(url)
@@ -37,6 +38,7 @@ class ImageGallery extends React.Component{
               photos: this.state.photos.concat(photos)
             });
             this.renderSizes();
+            this.refs["loadbar"].className = "hide-load-bar";
         });
     }
 
@@ -130,6 +132,7 @@ class ImageGallery extends React.Component{
                         }, this)
                     }
                 </ul>
+                <div ref="loadbar" className="loading-bar"></div>
             </div>
 
         )

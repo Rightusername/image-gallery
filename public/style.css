@@ -115,3 +115,14 @@ body, html{
 	right: 10px;
 }
 
+.show-load-bar{
+	display: block;
+	height: 200px;
+	background: url(img/load.gif) 50% no-repeat;
+	background-size: 25%;
+}
+
+.hide-load-bar{
+	display: none;
+}
+

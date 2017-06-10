@@ -9586,7 +9586,7 @@ var ImageGallery = function (_React$Component) {
         _this.changeOpenPhoto = _this.changeOpenPhoto.bind(_this);
         _this.throtledLoadPhotos = _underscore2.default.debounce(function () {
             this.loadPhotos();
-        }, 2000);
+        }, 1500);
         return _this;
     }
 
@@ -9608,6 +9608,7 @@ var ImageGallery = function (_React$Component) {
         value: function loadPhotos() {
             var _this3 = this;
 
+            this.refs["loadbar"].className = "show-load-bar";
             var url = 'https://api.500px.com/v1/photos?feature=popular&consumer_key=wB4ozJxTijCwNuggJvPGtBGCRqaZVcF6jsrzUadF&image_size=4&page=' + this.state.photosPage;
             _superagent2.default.get(url).query(null).set('Accept', 'application/json').end(function (error, res) {
                 var photos = res.body.photos;
@@ -9616,6 +9617,7 @@ var ImageGallery = function (_React$Component) {
                     photos: _this3.state.photos.concat(photos)
                 });
                 _this3.renderSizes();
+                _this3.refs["loadbar"].className = "hide-load-bar";
             });
         }
     }, {
@@ -9714,7 +9716,8 @@ var ImageGallery = function (_React$Component) {
                             user: el.user.fullname
                         });
                     }, this)
-                )
+                ),
+                _react2.default.createElement("div", { ref: "loadbar", className: "loading-bar" })
             );
         }
     }]);
