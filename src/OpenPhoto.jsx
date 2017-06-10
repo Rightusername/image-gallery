@@ -53,12 +53,12 @@ class OpenPhoto extends React.Component{
 	    	let url = this.props.url;
 	    	return (
 			    	<div className="openPhoto" onClick={this.props.handler}>
-			    		<img className="open-photo-image" src={this.props.photos[url].image_url}/>
+                        <div className="open-photo-wrap">
+			    		   <img className="open-photo-image" src={this.props.photos[url].image_url}/>
+                            <div className="photo-prev-btn" onClick={this.prevPhoto}>&#8249;</div>
+                            <div className="photo-next-btn" onClick={this.nextPhoto}>&#8250;</div>
+                        </div>
 			    		<div className="close-image"></div>
-			    		<div className="open-photo-nav">
-			    			<div className="photo-prev-btn" onClick={this.prevPhoto}>prev</div>
-			    			<div className="photo-next-btn" onClick={this.nextPhoto}>next</div>
-			    		</div>
 			    	</div>
 
 		    );

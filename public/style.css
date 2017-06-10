@@ -1,6 +1,6 @@
 body, html{
 	font-size: 0px;
-	font-family:  "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-family:  "QuickSand",Helvetica,Arial,sans-serif;
 	color: #e0e0e0;
 	height: 100%;
 }
@@ -25,9 +25,24 @@ body, html{
 	opacity: 1;
 }
 
+.open-photo-wrap{
+	display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    font-size: 70px;
+    font-family: "QuickSand";
+    user-select: none; 
+}
+
 @media (orientation: portrait){
-	.open-photo-image{
+	.open-photo-wrap{
 		width: 90%;
+	}
+
+	.open-photo-image{
+		width: 100%;
 		height: auto;
 		cursor: default;
 		transition: all ease-in-out 0.3s;
@@ -35,8 +50,11 @@ body, html{
 }
 
 @media (orientation: landscape){
-	.open-photo-image{
+	.open-photo-wrap{
 		height: 90%;
+	}
+	.open-photo-image{
+		height: 100%;
 		cursor: default;
 		transition: all ease-in-out 0.3s;
 	}
@@ -98,23 +116,35 @@ body, html{
 }
 
 .photo-prev-btn{
-	display: inline-block;
-	border-radius: 15px;
-	border: 3px solid white;
-	padding: 6px;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
 	font-weight: bold;
-	margin: 8px;
 	color: white;
+	height: 100%;
+	width: 40%;
+	position:absolute;
+	left:10px;
+	opacity: 0.3;
+	transition: opacity linear 0.3s;
 }
 
 .photo-next-btn{
-	display: inline-block;
-	border-radius: 15px;
-	border: 3px solid white;
-	padding: 6px;
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
 	font-weight: bold;
-	margin: 8px;
 	color: white;
+	height: 100%;
+	width: 40%;
+	position:absolute;
+	right:10px;
+	opacity: 0.3;
+	transition: opacity linear 0.3s;
+}
+
+.photo-next-btn:hover, .photo-prev-btn:hover{
+	opacity: 1;
 }
 
 
