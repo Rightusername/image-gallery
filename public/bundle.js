@@ -9561,6 +9561,10 @@ var _OpenPhoto = __webpack_require__(84);
 
 var _OpenPhoto2 = _interopRequireDefault(_OpenPhoto);
 
+var _underscore = __webpack_require__(193);
+
+var _underscore2 = _interopRequireDefault(_underscore);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -9580,7 +9584,9 @@ var ImageGallery = function (_React$Component) {
         _this.state = { photos: [], photosPage: 1, openPhoto: -1 };
         _this.handler = _this.handler.bind(_this);
         _this.changeOpenPhoto = _this.changeOpenPhoto.bind(_this);
-        _this.loadPhotos = _this.loadPhotos.bind(_this);
+        _this.throtledLoadPhotos = _underscore2.default.throttle(function () {
+            this.loadPhotos();
+        }, 1000).bind(_this);
         return _this;
     }
 
@@ -9604,7 +9610,7 @@ var ImageGallery = function (_React$Component) {
                 var photos = res.body.photos;
                 _this3.setState({
                     photos: _this3.state.photos.concat(photos),
-                    photosPage: _this3.state.photosPage + 1
+                    photosPage: +_this3.state.photosPage + 1
                 });
             });
         }
@@ -9612,6 +9618,15 @@ var ImageGallery = function (_React$Component) {
         key: "handler",
         value: function handler(e) {
             e.preventDefault();
+            if (e.target.className == "open-photo-image") {
+                if (this.state.photos.length - 1 == this.state.openPhoto) {
+                    this.throtledLoadPhotos();
+                    return;
+                }
+                this.setState({
+                    openPhoto: +this.state.openPhoto + 1
+                });
+            }
             if (e.target.className == "openPhoto" || e.target.className == "close-image") {
                 this.setState({
                     openPhoto: -1
@@ -9633,7 +9648,7 @@ var ImageGallery = function (_React$Component) {
     }, {
         key: "handleScroll",
         value: function handleScroll(e) {
-            if (e.target.body.scrollHeight - e.target.body.scrollTop === e.target.body.clientHeight) {
+            if (e.target.body.scrollHeight - e.target.body.scrollTop <= e.target.body.clientHeight + 10) {
                 this.loadPhotos();
             }
         }
@@ -9648,7 +9663,7 @@ var ImageGallery = function (_React$Component) {
                     handler: this.handler,
                     changeOpenPhoto: this.changeOpenPhoto,
                     photos: this.state.photos,
-                    loadPhotos: this.loadPhotos
+                    throtledLoadPhotos: this.throtledLoadPhotos
                 }),
                 _react2.default.createElement(
                     "ul",
@@ -9699,10 +9714,6 @@ var _react = __webpack_require__(25);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _underscore = __webpack_require__(194);
-
-var _underscore2 = _interopRequireDefault(_underscore);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -9719,9 +9730,6 @@ var OpenPhoto = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (OpenPhoto.__proto__ || Object.getPrototypeOf(OpenPhoto)).call(this));
 
-        _this.throtled = _underscore2.default.throttle(function () {
-            this.props.loadPhotos();
-        }, 1000);
         _this.prevPhoto = _this.prevPhoto.bind(_this);
         _this.nextPhoto = _this.nextPhoto.bind(_this);
         return _this;
@@ -9735,7 +9743,7 @@ var OpenPhoto = function (_React$Component) {
                 case 39:
                     if (this.props.photos.length - 1 == this.props.url) {
 
-                        this.throtled();
+                        this.props.throtledLoadPhotos();
                         return;
                     }
                     this.props.changeOpenPhoto(+this.props.url + 1);
@@ -9750,7 +9758,7 @@ var OpenPhoto = function (_React$Component) {
         key: 'nextPhoto',
         value: function nextPhoto() {
             if (this.props.photos.length - 1 == this.props.url) {
-                this.throtled();
+                this.props.throtledLoadPhotos();
                 return;
             }
             this.props.changeOpenPhoto(+this.props.url + 1);
@@ -24342,8 +24350,7 @@ exports.cleanHeader = function(header, shouldStripCookie){
 };
 
 /***/ }),
-/* 193 */,
-/* 194 */
+/* 193 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;//     Underscore.js 1.8.3

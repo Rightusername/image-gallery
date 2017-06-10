@@ -1,12 +1,8 @@
 import React from 'react';
-import _ from 'underscore';
 
 class OpenPhoto extends React.Component{
 	constructor(){
         super();
-        this.throtled = _.throttle(function() {
-        	this.props.loadPhotos();
-        },1000)
         this.prevPhoto = this.prevPhoto.bind(this);
         this.nextPhoto = this.nextPhoto.bind(this);
     }
@@ -20,7 +16,7 @@ class OpenPhoto extends React.Component{
     		case 39:
     			if(this.props.photos.length - 1 == this.props.url) {
     			
-    				this.throtled();
+    				this.props.throtledLoadPhotos();
     				return;
     			}
     			this.props.changeOpenPhoto(+this.props.url +1);
@@ -34,7 +30,7 @@ class OpenPhoto extends React.Component{
 
     nextPhoto(){
 		if(this.props.photos.length - 1 == this.props.url) {
-			this.throtled();
+			this.props.throtledLoadPhotos();
 			return;
 		}
 		this.props.changeOpenPhoto(+this.props.url +1);

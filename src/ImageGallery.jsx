@@ -2,6 +2,7 @@ import React from 'react';
 import superagent from "superagent";
 import Photo from "./Photo.jsx";
 import OpenPhoto from "./OpenPhoto.jsx";
+import _ from 'underscore';
 
 class ImageGallery extends React.Component{
 
@@ -10,8 +11,11 @@ class ImageGallery extends React.Component{
         this.state = {photos: [], photosPage: 1, openPhoto: -1};
         this.handler = this.handler.bind(this);
         this.changeOpenPhoto = this.changeOpenPhoto.bind(this);
-        this.loadPhotos = this.loadPhotos.bind(this);
+        this.throtledLoadPhotos = _.throttle(function() {
+            this.loadPhotos();
+        },1000).bind(this);
     }
+
     componentDidMount(){
         this.loadPhotos(this.state.photosPage);
         window.addEventListener('scroll', (e)=>this.handleScroll(e));
@@ -27,14 +31,23 @@ class ImageGallery extends React.Component{
             const photos = res.body.photos;  
             this.setState({
               photos: this.state.photos.concat(photos),
-              photosPage: this.state.photosPage + 1
+              photosPage: +this.state.photosPage + 1
             });
         });
     }
 
     handler(e) {
-        e.preventDefault()
-            if(e.target.className == "openPhoto" || e.target.className == "close-image" ){
+        e.preventDefault();
+        if(e.target.className == "open-photo-image"){
+            if(this.state.photos.length - 1 == this.state.openPhoto) {
+                this.throtledLoadPhotos();
+                return;
+            }
+            this.setState({
+              openPhoto: +this.state.openPhoto + 1
+            })
+        }
+        if(e.target.className == "openPhoto" || e.target.className == "close-image" ){
             this.setState({
               openPhoto: -1
             })
@@ -52,7 +65,7 @@ class ImageGallery extends React.Component{
     }
 
     handleScroll(e){
-        if(e.target.body.scrollHeight - e.target.body.scrollTop === e.target.body.clientHeight){
+        if(e.target.body.scrollHeight - e.target.body.scrollTop <= e.target.body.clientHeight + 10){
             this.loadPhotos();
         }
     }
@@ -66,7 +79,7 @@ class ImageGallery extends React.Component{
                     handler={this.handler}
                     changeOpenPhoto={this.changeOpenPhoto}
                     photos={this.state.photos}
-                    loadPhotos = {this.loadPhotos}
+                    throtledLoadPhotos = {this.throtledLoadPhotos}
                 />
                 <ul className="photos-list" onClick={this.handleOpen.bind(this)}>
                     {
