@@ -1,0 +1,117 @@
+body, html{
+	font-size: 0px;
+	font-family:  "Helvetica Neue",Helvetica,Arial,sans-serif;
+	color: #e0e0e0;
+	height: 100%;
+}
+
+.photos-list{
+	list-style: none;
+	flex-direcrion:column;
+	flex-wrap: wrap;
+	padding: 0;
+}
+
+.photo{
+	display: inline-block;
+	position: relative;
+	margin: 3px;
+	box-sizing: border-box;
+}
+
+.photo:hover .photo-name, .photo:hover .photo-author{
+	visibility: visible;
+	opacity: 1;
+}
+
+
+.open-photo-image{
+	height: 90%;
+	cursor: default;
+	transition: all ease-in-out 0.3s;
+}
+
+.photo-image{
+	cursor: pointer;
+	box-sizing: border-box;
+}
+
+.photo-name{
+	font-size: 16px;
+	visibility: hidden;
+	opacity:0;
+	position:absolute;
+	top: 4px;
+	left: 4px;
+	transition: all ease-in-out 0.3s;
+	cursor: pointer;
+}
+
+.photo-author{
+	font-size: 16px;
+	visibility: hidden;
+	opacity:0;
+	position:absolute;
+	bottom: 4px;
+	left: 4px;
+	transition: all ease-in-out 0.3s;
+	cursor: pointer;
+}
+
+
+.openPhoto{
+	display:flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	width: 100%;
+	z-index: 100;
+	position: fixed;
+	background-color: rgba(70,70,70,0.7);
+	top:0;
+	left:0;
+	cursor: pointer;
+	transition: all ease-in-out 0.3s;
+}
+
+.open-photo-nav{
+	font-size: 20px;
+	position: fixed;
+	bottom: 10px;
+	right: 10px;
+	z-index: 101;
+	user-select: none; 
+}
+
+.photo-prev-btn{
+	display: inline-block;
+	border-radius: 15px;
+	border: 3px solid white;
+	padding: 6px;
+	font-weight: bold;
+	margin: 8px;
+	color: white;
+}
+
+.photo-next-btn{
+	display: inline-block;
+	border-radius: 15px;
+	border: 3px solid white;
+	padding: 6px;
+	font-weight: bold;
+	margin: 8px;
+	color: white;
+}
+
+
+.close-image{
+	background: url(img/close-icon.png) 100% no-repeat;
+	background-size: cover;
+	width: 100px;
+	height: 100px;
+	position: fixed;
+	top: 10px;
+	right: 10px;
+}
+
