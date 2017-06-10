@@ -23,12 +23,23 @@ body, html{
 	opacity: 1;
 }
 
-
-.open-photo-image{
-	height: 90%;
-	cursor: default;
-	transition: all ease-in-out 0.3s;
+@media (orientation: portrait){
+	.open-photo-image{
+		width: 90%;
+		height: auto;
+		cursor: default;
+		transition: all ease-in-out 0.3s;
+	}
 }
+
+@media (orientation: landscape){
+	.open-photo-image{
+		height: 90%;
+		cursor: default;
+		transition: all ease-in-out 0.3s;
+	}
+}
+
 
 .photo-image{
 	cursor: pointer;
