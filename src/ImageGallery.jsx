@@ -21,6 +21,10 @@ class ImageGallery extends React.Component{
         window.addEventListener('scroll', (e)=>this.handleScroll(e));
     }
 
+    componentWillUnmount(){
+        console.log(12);
+    }
+
     loadPhotos(){
         const url='https://api.500px.com/v1/photos?feature=popular&consumer_key=wB4ozJxTijCwNuggJvPGtBGCRqaZVcF6jsrzUadF&image_size=4&page=' + this.state.photosPage;
         superagent
@@ -66,12 +70,13 @@ class ImageGallery extends React.Component{
 
     handleScroll(e){
         if(e.target.body.scrollHeight - e.target.body.scrollTop <= e.target.body.clientHeight + 10){
-            this.loadPhotos();
+            this.throtledLoadPhotos();
         }
     }
 
 
     render(){
+        console.log("render list");
     	return (
             <div>        
                 <OpenPhoto
@@ -85,7 +90,7 @@ class ImageGallery extends React.Component{
                     {
                         this.state.photos.map(function(el, i, arr) {
                             return <Photo
-                                key={el.id}
+                                key={i}
                                 name={el.name}
                                 i={i}
                                 image={el.image_url}

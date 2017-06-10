@@ -9601,6 +9601,11 @@ var ImageGallery = function (_React$Component) {
             });
         }
     }, {
+        key: "componentWillUnmount",
+        value: function componentWillUnmount() {
+            console.log(12);
+        }
+    }, {
         key: "loadPhotos",
         value: function loadPhotos() {
             var _this3 = this;
@@ -9649,12 +9654,13 @@ var ImageGallery = function (_React$Component) {
         key: "handleScroll",
         value: function handleScroll(e) {
             if (e.target.body.scrollHeight - e.target.body.scrollTop <= e.target.body.clientHeight + 10) {
-                this.loadPhotos();
+                this.throtledLoadPhotos();
             }
         }
     }, {
         key: "render",
         value: function render() {
+            console.log("render list");
             return _react2.default.createElement(
                 "div",
                 null,
@@ -9670,7 +9676,7 @@ var ImageGallery = function (_React$Component) {
                     { className: "photos-list", onClick: this.handleOpen.bind(this) },
                     this.state.photos.map(function (el, i, arr) {
                         return _react2.default.createElement(_Photo2.default, {
-                            key: el.id,
+                            key: i,
                             name: el.name,
                             i: i,
                             image: el.image_url,
