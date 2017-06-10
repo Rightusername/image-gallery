@@ -11,19 +11,18 @@ class ImageGallery extends React.Component{
         this.state = {photos: [], photosPage: 1, openPhoto: -1};
         this.handler = this.handler.bind(this);
         this.changeOpenPhoto = this.changeOpenPhoto.bind(this);
-        this.throtledLoadPhotos = _.throttle(function() {
+        this.throtledLoadPhotos = _.debounce(function() {
             this.loadPhotos();
-        },1000).bind(this);
+        },2000);
     }
 
     componentDidMount(){
         this.loadPhotos(this.state.photosPage);
         window.addEventListener('scroll', (e)=>this.handleScroll(e));
+        window.addEventListener("resize", (e)=>this.renderSizes(e));
     }
 
-    componentWillUnmount(){
-        console.log(12);
-    }
+
 
     loadPhotos(){
         const url='https://api.500px.com/v1/photos?feature=popular&consumer_key=wB4ozJxTijCwNuggJvPGtBGCRqaZVcF6jsrzUadF&image_size=4&page=' + this.state.photosPage;
@@ -34,9 +33,10 @@ class ImageGallery extends React.Component{
         .end ((error, res)=>{
             const photos = res.body.photos;  
             this.setState({
-              photos: this.state.photos.concat(photos),
-              photosPage: +this.state.photosPage + 1
+              photosPage: +this.state.photosPage + 1,
+              photos: this.state.photos.concat(photos)
             });
+            this.renderSizes();
         });
     }
 
@@ -59,8 +59,8 @@ class ImageGallery extends React.Component{
       }
 
     handleOpen(event){
-        if(event.target.tagName == "IMG"){
-            this.setState({openPhoto: event.target.dataset.i});
+        if(event.target.parentNode.tagName == "LI"){
+            this.setState({openPhoto: event.target.parentNode.dataset.i});
         }
     }
 
@@ -74,9 +74,39 @@ class ImageGallery extends React.Component{
         }
     }
 
+    renderSizes(){
+        var minHeight = 100;
+        var maxHeight = 300;
+        var maxPhotos = 5;
+        var padding = 1;
+        var width = this.refs["photos-list"].offsetWidth;
+        var photosWidths = [];
+        var photos = this.state.photos;
+        for(var i =0; i<this.state.photos.length; i++){
+            photosWidths[i] = (minHeight-padding*2)*photos[i].width/photos[i].height + padding*2;
+            photos[i].myHeight = minHeight;
+        }
+        for(var i =0; i<this.state.photos.length; i+=maxPhotos){
+            var l = 0;
+            for(var j=0; j<maxPhotos; j++){
+                l+=photosWidths[i+j];
+            }
+            var k = width/l;
+            // photos[i].myHeight = photos[i].myHeight*k;
+            // photos[i+1].myHeight = photos[i+1].myHeight*k;
+            // photos[i+2].myHeight = photos[i+2].myHeight*k;
+            // photos[i+3].myHeight = photos[i+3].myHeight*k;
+            // photos[i+4].myHeight = photos[i+4].myHeight*k;
+            for(var j=0; j<maxPhotos; j++){
+                photos[i+j].myHeight = photos[i+j].myHeight*k;
+            }
+        }
+
+        this.setState({photos: photos});
+    }
+
 
     render(){
-        console.log("render list");
     	return (
             <div>        
                 <OpenPhoto
@@ -86,20 +116,22 @@ class ImageGallery extends React.Component{
                     photos={this.state.photos}
                     throtledLoadPhotos = {this.throtledLoadPhotos}
                 />
-                <ul className="photos-list" onClick={this.handleOpen.bind(this)}>
+                <ul ref="photos-list" className="photos-list" onClick={this.handleOpen.bind(this)}>
                     {
                         this.state.photos.map(function(el, i, arr) {
                             return <Photo
                                 key={i}
+                                myHeight={this.state.photos[i].myHeight}
                                 name={el.name}
                                 i={i}
                                 image={el.image_url}
                                 user={el.user.fullname}
                             />;
-                        })
+                        }, this)
                     }
                 </ul>
             </div>
+
         )
 
     }

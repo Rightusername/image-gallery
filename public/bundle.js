@@ -9584,9 +9584,9 @@ var ImageGallery = function (_React$Component) {
         _this.state = { photos: [], photosPage: 1, openPhoto: -1 };
         _this.handler = _this.handler.bind(_this);
         _this.changeOpenPhoto = _this.changeOpenPhoto.bind(_this);
-        _this.throtledLoadPhotos = _underscore2.default.throttle(function () {
+        _this.throtledLoadPhotos = _underscore2.default.debounce(function () {
             this.loadPhotos();
-        }, 1000).bind(_this);
+        }, 2000);
         return _this;
     }
 
@@ -9599,11 +9599,9 @@ var ImageGallery = function (_React$Component) {
             window.addEventListener('scroll', function (e) {
                 return _this2.handleScroll(e);
             });
-        }
-    }, {
-        key: "componentWillUnmount",
-        value: function componentWillUnmount() {
-            console.log(12);
+            window.addEventListener("resize", function (e) {
+                return _this2.renderSizes(e);
+            });
         }
     }, {
         key: "loadPhotos",
@@ -9614,9 +9612,10 @@ var ImageGallery = function (_React$Component) {
             _superagent2.default.get(url).query(null).set('Accept', 'application/json').end(function (error, res) {
                 var photos = res.body.photos;
                 _this3.setState({
-                    photos: _this3.state.photos.concat(photos),
-                    photosPage: +_this3.state.photosPage + 1
+                    photosPage: +_this3.state.photosPage + 1,
+                    photos: _this3.state.photos.concat(photos)
                 });
+                _this3.renderSizes();
             });
         }
     }, {
@@ -9641,8 +9640,8 @@ var ImageGallery = function (_React$Component) {
     }, {
         key: "handleOpen",
         value: function handleOpen(event) {
-            if (event.target.tagName == "IMG") {
-                this.setState({ openPhoto: event.target.dataset.i });
+            if (event.target.parentNode.tagName == "LI") {
+                this.setState({ openPhoto: event.target.parentNode.dataset.i });
             }
         }
     }, {
@@ -9658,9 +9657,40 @@ var ImageGallery = function (_React$Component) {
             }
         }
     }, {
+        key: "renderSizes",
+        value: function renderSizes() {
+            var minHeight = 100;
+            var maxHeight = 300;
+            var maxPhotos = 5;
+            var padding = 1;
+            var width = this.refs["photos-list"].offsetWidth;
+            var photosWidths = [];
+            var photos = this.state.photos;
+            for (var i = 0; i < this.state.photos.length; i++) {
+                photosWidths[i] = (minHeight - padding * 2) * photos[i].width / photos[i].height + padding * 2;
+                photos[i].myHeight = minHeight;
+            }
+            for (var i = 0; i < this.state.photos.length; i += maxPhotos) {
+                var l = 0;
+                for (var j = 0; j < maxPhotos; j++) {
+                    l += photosWidths[i + j];
+                }
+                var k = width / l;
+                // photos[i].myHeight = photos[i].myHeight*k;
+                // photos[i+1].myHeight = photos[i+1].myHeight*k;
+                // photos[i+2].myHeight = photos[i+2].myHeight*k;
+                // photos[i+3].myHeight = photos[i+3].myHeight*k;
+                // photos[i+4].myHeight = photos[i+4].myHeight*k;
+                for (var j = 0; j < maxPhotos; j++) {
+                    photos[i + j].myHeight = photos[i + j].myHeight * k;
+                }
+            }
+
+            this.setState({ photos: photos });
+        }
+    }, {
         key: "render",
         value: function render() {
-            console.log("render list");
             return _react2.default.createElement(
                 "div",
                 null,
@@ -9673,16 +9703,17 @@ var ImageGallery = function (_React$Component) {
                 }),
                 _react2.default.createElement(
                     "ul",
-                    { className: "photos-list", onClick: this.handleOpen.bind(this) },
+                    { ref: "photos-list", className: "photos-list", onClick: this.handleOpen.bind(this) },
                     this.state.photos.map(function (el, i, arr) {
                         return _react2.default.createElement(_Photo2.default, {
                             key: i,
+                            myHeight: this.state.photos[i].myHeight,
                             name: el.name,
                             i: i,
                             image: el.image_url,
                             user: el.user.fullname
                         });
-                    })
+                    }, this)
                 )
             );
         }
@@ -9856,13 +9887,13 @@ var Photo = function (_React$Component) {
         value: function render() {
             return _react2.default.createElement(
                 "li",
-                { className: "photo" },
+                { className: "photo", "data-i": this.props.i },
                 _react2.default.createElement(
                     "div",
                     { className: "photo-name" },
                     this.props.name
                 ),
-                _react2.default.createElement("img", { className: "photo-image", src: this.props.image, height: "170px", "data-i": this.props.i }),
+                _react2.default.createElement("img", { className: "photo-image", src: this.props.image, height: this.props.myHeight + "px", "data-i": this.props.i }),
                 _react2.default.createElement(
                     "div",
                     { className: "photo-author" },

@@ -15,7 +15,6 @@ body, html{
 .photo{
 	display: inline-block;
 	position: relative;
-	margin: 3px;
 	box-sizing: border-box;
 }
 
@@ -34,6 +33,7 @@ body, html{
 .photo-image{
 	cursor: pointer;
 	box-sizing: border-box;
+	padding: 3px;
 }
 
 .photo-name{
