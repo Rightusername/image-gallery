@@ -42,11 +42,11 @@ body, html{
 @media (orientation: portrait){
 	.open-photo-wrap{
 		width: 90%;
+		max-height: 90%;
 	}
 
 	.open-photo-image{
 		width: 100%;
-		height: auto;
 		cursor: default;
 		transition: all ease-in-out 0.3s;
 	}
@@ -55,6 +55,7 @@ body, html{
 @media (orientation: landscape){
 	.open-photo-wrap{
 		height: 90%;
+		max-width: 90%;
 	}
 	.open-photo-image{
 		height: 100%;
