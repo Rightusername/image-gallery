@@ -17,7 +17,7 @@ class ImageGallery extends React.Component{
     }
 
     componentDidMount(){
-        this.loadPhotos(this.state.photosPage);
+        this.throtledLoadPhotos(this.state.photosPage);
         window.addEventListener('scroll', (e)=>this.handleScroll(e));
         window.addEventListener("resize", (e)=>this.renderSizes(e));
     }
