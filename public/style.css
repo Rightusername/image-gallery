@@ -25,15 +25,18 @@ body, html{
 	opacity: 1;
 }
 
+
+
 .open-photo-wrap{
 	display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    position: relative;
+    position: absolute;
     font-size: 70px;
     font-family: "QuickSand";
     user-select: none; 
+    z-index: 9999;
 }
 
 @media (orientation: portrait){
@@ -104,7 +107,10 @@ body, html{
 	left:0;
 	cursor: pointer;
 	transition: all ease-in-out 0.3s;
+	outline:none;
 }
+
+
 
 .open-photo-nav{
 	font-size: 20px;
@@ -127,6 +133,7 @@ body, html{
 	left:10px;
 	opacity: 0.3;
 	transition: opacity linear 0.3s;
+	outline:none;
 }
 
 .photo-next-btn{
@@ -141,6 +148,7 @@ body, html{
 	right:10px;
 	opacity: 0.3;
 	transition: opacity linear 0.3s;
+	outline:none;
 }
 
 .photo-next-btn:hover, .photo-prev-btn:hover{
@@ -149,13 +157,18 @@ body, html{
 
 
 .close-image{
-	background: url(img/close-icon.png) 100% no-repeat;
-	background-size: cover;
-	width: 100px;
-	height: 100px;
+	background: url(img/close-icon.png) 100% 0% no-repeat;
+	background-size: 5%;
+	width: 100%;
+	height: 100%;
 	position: fixed;
+	opacity: 0.5;
 	top: 10px;
 	right: 10px;
+}
+
+.close-image:hover{
+	opacity: 1;
 }
 
 .show-load-bar{

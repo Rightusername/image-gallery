@@ -13,7 +13,7 @@ class ImageGallery extends React.Component{
         this.changeOpenPhoto = this.changeOpenPhoto.bind(this);
         this.throtledLoadPhotos = _.debounce(function() {
             this.loadPhotos();
-        },1500);
+        },1500).bind(this);
     }
 
     componentDidMount(){

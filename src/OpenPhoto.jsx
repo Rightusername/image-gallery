@@ -29,7 +29,8 @@ class OpenPhoto extends React.Component{
     }
 
     nextPhoto(){
-		if(this.props.photos.length - 1 == this.props.url) {
+		if(this.props.photos.length - 2 == this.props.url) {
+            this.props.changeOpenPhoto(+this.props.url +1);
 			this.props.throtledLoadPhotos();
 			return;
 		}
@@ -39,7 +40,6 @@ class OpenPhoto extends React.Component{
     prevPhoto(){
 		if(this.props.url == 0) return;
 		this.props.changeOpenPhoto(+this.props.url -1);
-		console.log(12);
     }
 
     componentWillMount(){
