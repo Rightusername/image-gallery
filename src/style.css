@@ -1,0 +1,242 @@
+* {
+    user-select: none;
+}
+
+body, html {
+    font-size: 0;
+    font-family: QuickSand, Helvetica, Arial, sans-serif;
+    color: #e0e0e0;
+    height: 100%
+}
+
+.photos-list {
+    list-style: none;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -ms-flex-pack: distribute;
+    justify-content: space-around;
+    padding: 0
+}
+
+.photo {
+    display: inline-block;
+    position: relative;
+    user-select:none;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box
+}
+
+.photo:hover .photo-author, .photo:hover .photo-name {
+    visibility: visible;
+    opacity: 1
+}
+
+.open-photo-wrap {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    position: absolute;
+    font-size: 70px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    z-index: 99;
+    -webkit-transition: all ease-in-out .3s;
+    transition: all ease-in-out .3s
+}
+
+@media (orientation:portrait) {
+    .open-photo-wrap {
+        width: 90%;
+        max-height: 90%;
+    }
+    .open-photo-image {
+        width: 100%;
+        cursor: default;
+        -webkit-transition: all ease-in-out .3s;
+        transition: all ease-in-out .3s;
+    }
+}
+
+@media (orientation:landscape) {
+    .open-photo-wrap {
+        height: 90%;
+        max-width: 90%;
+    }
+    .open-photo-image {
+        height: 100%;
+        cursor: default;
+        -webkit-transition: all ease-in-out .3s;
+        transition: all ease-in-out .3s
+    }
+}
+
+.photo-image {
+    cursor: pointer;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 3px
+}
+
+.photo-name {
+    font-size: 16px;
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    -webkit-transition: all ease-in-out .3s;
+    transition: all ease-in-out .3s;
+    cursor: pointer
+}
+
+.photo-author {
+    font-size: 16px;
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    bottom: 4px;
+    left: 4px;
+    -webkit-transition: all ease-in-out .3s;
+    transition: all ease-in-out .3s;
+    cursor: pointer
+}
+
+.openPhoto {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    z-index: 10;
+    position: fixed;
+    background-color: rgba(70, 70, 70, .7);
+    top: 0;
+    left: 0;
+    cursor: pointer;
+    -webkit-transition: all ease-in-out .3s;
+    transition: all ease-in-out .3s;
+    outline: 0
+}
+
+.open-photo-nav {
+    font-size: 20px;
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    z-index: 101;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none
+}
+
+.photo-prev-btn {
+	font-size: 100px;
+    font-family: QuickSand;
+	padding:30px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    font-weight: 700;
+    color: #fff;
+    height: 50%;
+    position: absolute;
+    left: 10px;
+    opacity: .3;
+    -webkit-transition: opacity linear .3s;
+    transition: opacity linear .3s;
+    outline: 0;
+    z-index: 100;
+    user-select: none;
+}
+
+.photo-next-btn {
+	font-size: 100px;
+    font-family: QuickSand;
+	padding: 30px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: end;
+    -ms-flex-pack: end;
+    justify-content: flex-end;
+    font-weight: 700;
+    color: #fff;
+    height: 50%;
+    position: absolute;
+    right: 10px;
+    opacity: .3;
+    -webkit-transition: opacity linear .3s;
+    transition: opacity linear .3s;
+    outline: 0;
+    z-index: 100;
+    user-select: none;
+}
+
+.photo-next-btn:hover, .photo-prev-btn:hover {
+    opacity: 1
+}
+
+.close-image {
+    background: url(img/close-icon.png) 100% 0 no-repeat;
+    background-size: 5%;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    opacity: .5;
+    top: 10px;
+    right: 10px
+}
+
+.close-image:hover {
+    opacity: 1
+}
+
+.show-load-bar {
+    display: block;
+    height: 200px;
+    background: url(img/load.gif) 50% no-repeat;
+    background-size: 25%
+}
+
+.hide-load-bar {
+    display: none
+}
+
+
+.closed{
+	transform: scale(0.5);
+}
