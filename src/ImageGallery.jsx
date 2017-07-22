@@ -53,9 +53,17 @@ class ImageGallery extends React.Component{
             })
         }
         if(e.target.className == "openPhoto" || e.target.className == "close-image" ){
-            this.setState({
-              openPhoto: -1
-            })
+            this.refs['openPhoto'].className = "closed";
+            this.refs['openPhoto'].refs['openPhoto'].getElementsByClassName('open-photo-wrap')[0].classList.remove('zoomIn');
+            this.refs['openPhoto'].refs['openPhoto'].getElementsByClassName('open-photo-wrap')[0].classList.add('zoomOut');
+            setTimeout(function () {
+                this.setState({
+                  openPhoto: -1
+                })
+            }.bind(this), 300);
+
+
+
         }
       }
 
@@ -112,6 +120,7 @@ class ImageGallery extends React.Component{
     	return (
             <div>        
                 <OpenPhoto
+                    ref="openPhoto"
                     url={this.state.openPhoto}
                     handler={this.handler}
                     changeOpenPhoto={this.changeOpenPhoto}

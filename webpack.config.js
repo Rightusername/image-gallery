@@ -6,7 +6,7 @@ const config = {
     entry: './src/main.js',
 
     output: {
-        path: 'C:\\Users\\Star-pc\\react-projects\\testTask\\public',
+        path: 'C:\\Users\\Star-pc\\react-projects\\ImageGallery\\public',
         filename: 'bundle.js'
     },
 
@@ -29,7 +29,7 @@ const config = {
             }
         ]
     }
-
+ 
 };
 
 module.exports = config;

@@ -52,12 +52,12 @@ class OpenPhoto extends React.Component{
 	    }else{
 	    	let url = this.props.url;
 	    	return (
-			    	<div className="openPhoto" onClick={this.props.handler}>
-                        <div className="open-photo-wrap">
+			    	<div className="openPhoto" ref="openPhoto" onClick={this.props.handler}>
+                        <div className="open-photo-wrap animated zoomIn">
 			    		   <img className="open-photo-image" src={this.props.photos[url].image_url}/>
+                        </div>
                             <div className="photo-prev-btn" onClick={this.prevPhoto}>&#8249;</div>
                             <div className="photo-next-btn" onClick={this.nextPhoto}>&#8250;</div>
-                        </div>
 			    		<div className="close-image"></div>
 			    	</div>
 
