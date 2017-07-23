@@ -2,7 +2,7 @@
     user-select: none;
 }
 
-body, html {
+body, html, #app {
     font-size: 0;
     font-family: QuickSand, Helvetica, Arial, sans-serif;
     color: #e0e0e0;
@@ -230,6 +230,8 @@ body, html {
     position:relative;
     height: 200px;
 }
+
+
 
 .hide-load-bar {
     display: none

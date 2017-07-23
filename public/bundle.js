@@ -9658,7 +9658,7 @@ var ImageGallery = function (_React$Component) {
     }, {
         key: "handleScroll",
         value: function handleScroll(e) {
-            if (e.target.body.scrollHeight - e.target.body.scrollTop <= e.target.body.clientHeight + 10) {
+            if (e.target.body.scrollHeight - e.target.body.scrollTop <= e.target.body.clientHeight + 10 && this.state.photos.length != 0) {
                 this.refs["loadbar"].className = "show-load-bar";
                 this.throtledLoadPhotos();
             }
@@ -9735,7 +9735,7 @@ var ImageGallery = function (_React$Component) {
                             _react2.default.createElement(
                                 "svg",
                                 { className: "circular-loader", viewBox: "25 25 50 50" },
-                                _react2.default.createElement("circle", { className: "loader-path", cx: "50", cy: "50", r: "20", fill: "none", stroke: "#70c542", "stroke-width": "2" })
+                                _react2.default.createElement("circle", { className: "loader-path", cx: "50", cy: "50", r: "20", fill: "none", stroke: "#70c542", strokeWidth: "2.5" })
                             )
                         )
                     )

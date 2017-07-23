@@ -12,3 +12,7 @@ gulp.task('css', function(){
         }))
     .pipe(gulp.dest('public/'));
 });
+
+gulp.task('watch', function() {
+    gulp.watch('src/**/*.css', ['css']);  // Watch all the .less files, then run the less task
+});

@@ -78,7 +78,7 @@ class ImageGallery extends React.Component{
     }
 
     handleScroll(e){
-        if(e.target.body.scrollHeight - e.target.body.scrollTop <= e.target.body.clientHeight + 10){
+        if(e.target.body.scrollHeight - e.target.body.scrollTop <= e.target.body.clientHeight + 10 && this.state.photos.length != 0){
             this.refs["loadbar"].className = "show-load-bar";
             this.throtledLoadPhotos();
         }
@@ -145,7 +145,7 @@ class ImageGallery extends React.Component{
                     <div className="profile-main-loader">
                       <div className="loader">
                         <svg className="circular-loader"viewBox="25 25 50 50" >
-                          <circle className="loader-path" cx="50" cy="50" r="20" fill="none" stroke="#70c542" stroke-width="2" />
+                          <circle className="loader-path" cx="50" cy="50" r="20" fill="none" stroke="#70c542" strokeWidth="2.5" />
                         </svg>
                       </div>
                     </div>
