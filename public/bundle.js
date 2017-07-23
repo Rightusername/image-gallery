@@ -9723,13 +9723,30 @@ var ImageGallery = function (_React$Component) {
                         });
                     }, this)
                 ),
-                _react2.default.createElement("div", { ref: "loadbar", className: "loading-bar" })
+                _react2.default.createElement(
+                    "div",
+                    { ref: "loadbar", className: "loading-bar" },
+                    _react2.default.createElement(
+                        "div",
+                        { className: "profile-main-loader" },
+                        _react2.default.createElement(
+                            "div",
+                            { className: "loader" },
+                            _react2.default.createElement(
+                                "svg",
+                                { className: "circular-loader", viewBox: "25 25 50 50" },
+                                _react2.default.createElement("circle", { className: "loader-path", cx: "50", cy: "50", r: "20", fill: "none", stroke: "#70c542", "stroke-width": "2" })
+                            )
+                        )
+                    )
+                )
             );
         }
     }]);
 
     return ImageGallery;
 }(_react2.default.Component);
+// 
 
 exports.default = ImageGallery;
 
