@@ -9913,7 +9913,7 @@ var Photo = function (_React$Component) {
         value: function render() {
             return _react2.default.createElement(
                 "li",
-                { className: "photo", "data-i": this.props.i },
+                { className: "photo animated fadeIn", "data-i": this.props.i },
                 _react2.default.createElement(
                     "div",
                     { className: "photo-name" },
